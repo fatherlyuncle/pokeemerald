@@ -26,7 +26,21 @@ OldaleTown_EventScript_MoveMartEmployee:: @ 81E8EDE
 	return
 
 OldaleTown_EventScript_CitySign:: @ 81E8EEA
-	msgbox OldaleTown_Text_CitySign, MSGBOX_SIGN
+    givemon SPECIES_TORCHIC 30 0
+    setflag FLAG_BADGE01_GET
+    setflag FLAG_BADGE02_GET
+    setflag FLAG_BADGE03_GET
+    setflag FLAG_BADGE04_GET
+    setflag FLAG_BADGE05_GET
+    setflag FLAG_BADGE06_GET
+    setflag FLAG_BADGE07_GET
+    setflag FLAG_BADGE08_GET
+    setflag FLAG_SYS_POKEMON_GET
+    setflag FLAG_SYS_POKEDEX_GET
+    @getsetmondata FLAG_SET_MON_DATA 0 MON_DATA_HP 0 50
+    additem ITEM_MACH_BIKE 1
+    additem ITEM_ITEMFINDER 1
+    additem ITEM_SUPER_ROD 1
 	end
 
 OldaleTown_EventScript_Girl:: @ 81E8EF3
