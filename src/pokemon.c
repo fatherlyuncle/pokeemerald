@@ -2295,6 +2295,10 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
         value = personality & 1;
         SetBoxMonData(boxMon, MON_DATA_ABILITY_NUM, &value);
     }
+    
+    // set no hidden nature (for mints)
+    value = 0xFF;
+    SetBoxMonData(boxMon, MON_DATA_HIDDEN_NATURE, &value);
 
     GiveBoxMonInitialMoveset(boxMon);
 }
@@ -4011,6 +4015,9 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
                 | (substruct3->giftRibbon7 << 26);
         }
         break;
+    case MON_DATA_HIDDEN_NATURE:
+        retVal = substruct0->hiddenNature;
+        break;
     default:
         break;
     }
@@ -4329,6 +4336,9 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         substruct3->spDefenseIV = (ivs >> 25) & 0x1F;
         break;
     }
+    case MON_DATA_HIDDEN_NATURE:
+        SET8(substruct0->hiddenNature);
+        break;
     default:
         break;
     }
@@ -5395,7 +5405,10 @@ u8 *UseStatIncreaseItem(u16 itemId)
 
 u8 GetNature(struct Pokemon *mon)
 {
-    return GetMonData(mon, MON_DATA_PERSONALITY, 0) % 25;
+    if (GetMonData(mon, MON_DATA_HIDDEN_NATURE, 0) == 0xFF)
+        return GetMonData(mon, MON_DATA_PERSONALITY, 0) % 25;
+    else
+        return GetMonData(mon, MON_DATA_HIDDEN_NATURE, 0);
 }
 
 u8 GetNatureFromPersonality(u32 personality)

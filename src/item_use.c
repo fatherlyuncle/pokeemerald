@@ -1133,3 +1133,9 @@ void ItemUseOutOfBattle_CannotUse(u8 taskId)
 }
 
 #undef tUsingRegisteredKeyItem
+
+void ItemUseOutOfBattle_Mints(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_Mints;
+    SetUpItemUseCallback(taskId);
+}
